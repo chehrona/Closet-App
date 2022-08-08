@@ -54,6 +54,14 @@ $(document).ready(function() {
     });
     
     generatesCalendar();
+
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=43.6534817&lon=-79.3839347&cnt=14&appid=df92d03ba96fd8cc4d1a8c530ce79c67";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+        });
 });
 
 
