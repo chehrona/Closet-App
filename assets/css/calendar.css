@@ -4,7 +4,6 @@
     margin: 0;
     font-family: 'EB Garamond', sans-serif;
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 .calendarBox {
@@ -92,7 +91,7 @@
     border-bottom: 1px solid lightgray;
     text-align: left;
     font-weight: bold;
-    height: 100px;
+    height: 120px;
 }
 
 .prev-date, .next-date {
@@ -102,4 +101,8 @@
 .days div:hover {
     border: 2px solid grey;
     cursor: pointer;
+}
+
+.today {
+    background-color: whitesmoke;
 }
