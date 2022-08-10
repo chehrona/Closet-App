@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dresswell</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/closet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="assets/css/clothes.css">
+</head>
+<body>
+    <div class="header">
+        <h1 id="appTitle">DRESSWELL</h1>
+        <h3 id="motto">Dress well, think less</h3>
+        <div id="navbarContainer">
+            <div id="homeBar" class="navItem"><a href="index.html">HOME</a></div>
+            <div id="featuresBar" class="navItem"><a href="features.html">FEATURES</a></div>
+            <div id="aboutBar" class="navItem"><a href="about.html">ABOUT</a></div>
+        </div>
+    </div>
+
+    <div class="mainBody">
+        <div class="closetHeader">
+            <div id="category"><img src="assets/images/options-lines.png" class="iconImage">Category</div>
+            <div class="buttonsTop">
+                <i class="fa-solid fa-magnifying-glass searchButton"></i>
+                <div id="closet">Closet</div>
+                <div id="editButton">Edit</div>
+            </div>
+        </div>
+        <div class="closetBody">
+            <div id="categoryBox">
+                <div class="categoryList">
+                    <div class="categoryName"><img src="assets/images/007-crop-top.png" class="iconImage">Blouses</div>
+                    <div class="categoryName"><img src="assets/images/001-loose-pants.png" class="iconImage">Pants</div>
+                    <div class="categoryName"><img src="assets/images/003-dress.png" class="iconImage">Dresses</div>
+                    <div class="categoryName"><img src="assets/images/002-jacket.png" class="iconImage">Puffers</div>
+                    <div class="categoryName"><img src="assets/images/005-shorts.png" class="iconImage">Shorts</div>
+                    <div class="categoryName"><img src="assets/images/006-skirt.png" class="iconImage">Skirts</div>
+                    <div class="categoryName"><img src="assets/images/004-purse.png" class="iconImage">Purses</div>
+                    <div class="categoryName"><img src="assets/images/009-sweater.png" class="iconImage">Sweaters</div>
+                </div>
+                <div class="uploadPopup disabledPopup uploadPicPopup">
+                    <input type="file" id="inputField" accept="image/*"/>
+                </div>
+                <div class="uploadPopupTriangle disabledPopup uploadPicPopup"></div>
+                <div class="choicePopup disabledPopup pickActionPopup">
+                    <div class="uploadPhoto popupChoice">Upload Photo</div>
+                    <div class="importWeb popupChoice">Import from Web</div>
+                </div>
+                <div class="triangle disabledPopup pickActionPopup"></div>
+                <footer class="pageFooter">
+                    <i class="fa-solid fa-square-plus plusSign"></i>
+                    <h1>Item</h1>
+                </footer>
+            </div>
+            <div class="clothesBox">
+                <div class="imageList">
+                    <div class="clothesImageBox"><img src="assets/images/009-sweater.png" class="clothesItem"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="module" src="assets/javascript/clothes.js"></script> 
+</body>
+</html>

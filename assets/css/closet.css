@@ -1,29 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Oleo+Script+Swash+Caps&display=swap');
+
+html, body {
+    margin: 0;
+}
+
+.header {
+    min-height: 15%;
+    margin-bottom: 15px;
+    width: 100%;
+    margin-top: 1%;
+    text-align: center;
+    align-items: center;
+}
+
 #appTitle {
     font-family: 'EB Garamond', serif;
     font-weight: bolder;
-    font-size: 40px;
-    text-align: center;
-    margin-bottom: 2px;
-    margin-top: 10px;
+    font-size: 38px;
+    margin-bottom: 0.2%; 
 }
 
 #motto {
     font-family: 'Oleo Script Swash Caps', cursive;
     font-size: 22px;
     font-weight: 200;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 3%;
 }
 
 #navbarContainer {
     font-family: 'EB Garamond', serif;
     font-size: 18px;
     display: inline-flex;
-    justify-content: center;
     width: 100%;
-    margin-bottom: 20px;
+    justify-content: center;
 }
 
 .navItem {
@@ -51,7 +61,7 @@ a:hover {
 #introBody {
     margin: 0 auto;
     width: 100%;
-    height: 100%;
+    min-height: 85%;
 }
 
 img {
