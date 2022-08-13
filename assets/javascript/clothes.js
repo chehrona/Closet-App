@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
-import { getDatabase, push, ref, onValue} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
+import { getDatabase, push, ref, onChildAdded, limitToLast, query} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js";
 
   // Your web app's Firebase configuration
@@ -16,17 +16,27 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL} from "https
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const storage = getStorage(app);
-const categoryRef = storageRef(storage, 'tops/');
+// const categoryRef = storageRef(storage, '/tops/');
 const linksRef = ref(db, "links/");
 
 
 let imageFromDatabase = null;
+let imageID = null;
 
 $(document).ready(function() {
-    onValue(linksRef, function(snapshot) {
-        imageFromDatabase = snapshot.val().imageURL;
+        let queryURL = "https://closet-e1cb1-default-rtdb.firebaseio.com/links/.json";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            for (let key in response) {
+                imageFromDatabase = response[key].imageURL;
+                $(".imageList").append('<div class="clothesImageBox"><img src="' + imageFromDatabase + '" class="clothesItem"></div>'); 
+            }
+            // console.log(response)
+            
+        })
         
-    });
 
     $(".pageFooter").on("click", function() {
         $(".pickActionPopup").removeClass("disabledPopup");
@@ -47,14 +57,18 @@ $(document).ready(function() {
             imageSource = reader.result;
         }
         reader.readAsDataURL(imageFiles[0]);
+        let imageName = (Math.floor(Math.random() * 100)).toString() + imageFiles[0].name;
+        const categoryRef = storageRef(storage, 'tops/' + imageName);
+       
         uploadBytes(categoryRef, imageFiles[0]).then(function(snapshot) {
             $(".uploadPicPopup").addClass("disabledPopup");
             getDownloadURL(categoryRef).then(function(url) {
                 push(ref(db, "links/"), {
                     imageURL: url
                 });
+            
             });
-            $(".imageList").append('<div class="clothesImageBox"><img src="' + imageFromDatabase + '" class="clothesItem"></div>');
+            
         });
     });
     
