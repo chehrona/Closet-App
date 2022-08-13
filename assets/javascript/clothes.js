@@ -24,18 +24,18 @@ let imageFromDatabase = null;
 let imageID = null;
 
 $(document).ready(function() {
-        let queryURL = "https://closet-e1cb1-default-rtdb.firebaseio.com/links/.json";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            for (let key in response) {
-                imageFromDatabase = response[key].imageURL;
-                $(".imageList").append('<div class="clothesImageBox"><img src="' + imageFromDatabase + '" class="clothesItem"></div>'); 
-            }
-            // console.log(response)
-            
-        })
+    let queryURL = "https://closet-e1cb1-default-rtdb.firebaseio.com/links/.json";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        for (let key in response) {
+            imageFromDatabase = response[key].imageURL;
+            $(".imageList").append('<div class="clothesImageBox"><img src="' + imageFromDatabase + '" class="clothesItem"></div>'); 
+        }
+        // console.log(response)
+        
+    })
         
 
     $(".pageFooter").on("click", function() {
