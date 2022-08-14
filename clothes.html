@@ -21,7 +21,7 @@
 
     <div class="mainBody">
         <div class="closetHeader">
-            <div id="category"><img src="assets/images/options-lines.png" class="iconImage">Category</div>
+            <div id="category"><img src="assets/images/list.png" class="iconImage">Category</div>
             <div class="buttonsTop">
                 <i class="fa-solid fa-magnifying-glass searchButton"></i>
                 <div id="closet">Closet</div>
@@ -55,11 +55,96 @@
                 </footer>
             </div>
             <div class="clothesBox">
-                <div class="imageList">
-                    <div class="clothesImageBox"><img src="assets/images/009-sweater.png" class="clothesItem"></div>
-                    
+                <div class="imageList"></div>
+            </div>
+            <div class="addPicPopup disabledPopup popupOuterBox">
+                <div class="actionsButtonsTop">
+                    <div id="cancelButton" class="clipButtons">Cancel</div>
+                    <div class="popupLabel">Import Image</div>
+                    <div id="nextButton" class="clipButtons">Next</div>
+                </div>
+                <div class="showPickedImage">
                 </div>
             </div>
+            <div class="saveToPopup disabledPopup popupOuterBox">
+                <div class="actionsButtonsTop">
+                    <div id="cancelCatButton" class="clipButtons">Cancel</div>
+                    <div class="popupLabel">Save To</div>
+                    <div id="doneButton" class="clipButtons disabledButton">Done</div>
+                </div>
+                <div class="pickFeaturesBody">
+                    <div class="pickFirstCategory">
+                        <p>Please select a category</p>
+                        <div class="defaultCategories">
+                            <div id="makeOwnCategory" class="pickCategory"><img src="assets/images/question.png" class="popupIcon">Add category</div>
+                            <div id="outerwear" class="pickCategory"><img src="assets/images/002-jacket.png" class="popupIcon">Outerwear</div>
+                            <div id="tops" class="pickCategory"><img src="assets/images/009-sweater.png" class="popupIcon">Tops</div>
+                            <div id="dresses" class="pickCategory"><img src="assets/images/003-dress.png" class="popupIcon">Dresses</div>
+                            <div id="bottoms" class="pickCategory"><img src="assets/images/001-loose-pants.png" class="popupIcon">Bottoms</div>
+                            <div id="bags" class="pickCategory"><img src="assets/images/004-purse.png" class="popupIcon">Bags</div>
+                            <div id="shoes" class="pickCategory"><img src="assets/images/high-heels.png" class="popupIcon">Shoes</div>   
+                        </div>
+                    </div>
+                    <div class="pickColor">
+                        <p>Please select upto three colors</p>
+                        <div class="colorList">
+                            <div class="colorCircle" id="red"></div>
+                            <div class="colorCircle" id="green"></div>
+                            <div class="colorCircle" id="blue"></div>
+                            <div class="colorCircle" id="white"></div>
+                            <div class="colorCircle" id="black"></div>
+                            <div class="colorCircle" id="pink"></div>
+                            <div class="colorCircle" id="yellow"></div>
+                            <div class="colorCircle" id="orange"></div>
+                            <div class="colorCircle" id="brown"></div>
+                            <div class="colorCircle" id="purple"></div>
+                            <div class="colorCircle" id="grey"></div>
+                        </div>
+                    </div>
+                    <div class="pickIcon">
+                        <p>Please select a category icon</p>
+                        <div class="iconList">
+                            <img id="blazer" src="assets/images/001-blazer.png" class="iconPic">
+                            <img id="vests" src="assets/images/008-vest.png" class="iconPic">
+                            <img id="cardigan" src="assets/images/006-cardigan.png" class="iconPic">
+                            <img id="turtlenecks" src="assets/images/007-turtleneck.png" class="iconPic">
+                            <img id="hoodie" src="assets/images/012-hood.png" class="iconPic">
+                            <img id="overalls" src="assets/images/010-overall.png" class="iconPic">
+                            <img id="tshirt" src="assets/images/008-tshirt.png" class="iconPic">
+                            <img id="kicks" src="assets/images/singlet.png" class="iconPic">
+                            <img id="coats" src="assets/images/015-overcoat.png" class="iconPic">
+                            <img id="hats" src="assets/images/010-hat.png" class="iconPic">
+                            <img id="caps" src="assets/images/003-cap.png" class="iconPic">
+                            <img id="tuque" src="assets/images/016-wool-hat.png" class="iconPic">
+                            <img id="scarves" src="assets/images/017-scarf.png" class="iconPic">
+                            <img id="swimsuits" src="assets/images/013-swimsuit.png" class="iconPic">
+                            <img id="belts" src="assets/images/004-belt.png" class="iconPic">
+                            <img id="gloves" src="assets/images/012-gloves.png" class="iconPic">
+                            <img id="jewellery" src="assets/images/002-accessories.png" class="iconPic">
+                            <img id="sandals" src="assets/images/005-sandals.png" class="iconPic">
+                            <img id="boots" src="assets/images/011-boot.png" class="iconPic">
+                            <img id="kicks" src="assets/images/014-sport-shoe.png" class="iconPic">  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="importPopup disabledPopup popupOuterBox">
+                <div class="actionsButtonsTop">
+                    <div id="cancelButton" class="clipButtons">Cancel</div>
+                    <div class="popupLabel">Clipper</div>
+                    <div id="clipButton" class="clipButtons">+Clip</div>
+                </div>
+                <div class="clipperBody">
+                    <div class="urlBox"><input id="urlInputField" type="url" placeholder="Enter a URL"/><i class="fa-solid fa-circle-xmark disabledPopup"></i></div>
+                    <div class="clipperInstructions">
+                        <li>Enter URL above or paste it from the web</li>
+                        <li>Tap "+ Clip" to start saving images</li>
+                        <li>Tap "Import" to save the image into your closet</li>
+                    </div>
+                    <div class="externalPage disabledPopup"></div>
+                </div>
+            </div>
+            
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

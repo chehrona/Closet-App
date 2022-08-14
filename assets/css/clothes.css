@@ -6,6 +6,7 @@
     box-sizing: border-box;
 }
 
+
 .mainBody {
     width: 100%;
     height: 710px;
@@ -88,6 +89,11 @@ img {
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+}
+
+categoryName:hover {
+    background-color: lightgray;
 }
 
 .iconImage {
@@ -123,9 +129,10 @@ img {
 }
 
 .clothesImageBox {
-    width: 100px;
-    min-width: 100px;
-    height: 150px;
+    position: relative;
+    width: 120px;
+    min-width: 120px;
+    height: 170px;
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid lightgray;
 }
@@ -133,7 +140,7 @@ img {
 .clothesItem {
     width: 100%;
     height: 100%;
-    padding: 3px;
+    padding: 1px;
 }
 
 .searchButton {
@@ -254,4 +261,297 @@ img {
 
 .imgUpload {
     width: 180px;
+}
+
+.popupOuterBox {
+    position: absolute;
+    left: 400px;
+    top: 150px;
+    height: 680px;
+    width: 50%;
+    min-width: 50%;
+    border: 1px solid white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px lightgrey;
+    background-color: white;
+    font-size: 18px;
+    z-index: 20;
+    background-color: white;
+}
+
+.actionsButtonsTop {
+    height: 40px;
+    text-align: center;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid lightgrey;
+    
+}
+
+.popupLabel {
+    font-weight: 700;
+    text-shadow: 0px 0px 10px lightgray;
+}
+
+.clipButtons {
+    color: rgb(140, 140, 178);
+    cursor: pointer;
+}
+
+.clipperBody {
+    width: 100%;
+    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.urlBox {
+    display: flex;
+    width: 100%;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 2px;
+}
+
+#urlInputField {
+    width: 96%;
+    font-size: 18px;
+    border: transparent;
+    border-radius: 10px;
+    padding: 2px;
+    padding-left: 10px;
+}
+
+#urlInputField:focus {
+    outline: none;
+}
+
+.clipperInstructions {
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.fa-circle-xmark {
+    font-size: 20px;
+    color: lightgrey;
+}
+
+.outOfFocus {
+    opacity: 0.5;
+}
+
+object {
+    height: 100%;
+    width: 100%;
+ }
+
+ .penEdit {
+    position: absolute;
+    font-size: 14px;
+    color: gray;
+    top: 150px;
+    left: 80px;
+    cursor: pointer;
+}
+
+.deleteImage {
+    position: absolute;
+    font-size: 14px;
+    color: gray;
+    top: 150px;
+    left: 100px;
+    cursor: pointer;
+}
+
+.deleteImagePopup {
+    border: 1px white solid;
+    background-color: white;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px lightgray;
+    padding: 5px;
+    text-align: center;
+    width: 70px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.showPickedImage {
+    margin: 20px;
+    position: relative;
+    height: 600px;
+    
+}
+
+.pickedImage {
+    height: 100%;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.disabledButton {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.defaultCategories {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.pickFeaturesBody {
+    text-align: center;
+    margin: 20px;
+}
+
+.pickFirstCategory {
+    padding: 10px;
+    border: 1px solid lightgray;
+    overflow-y: scroll;
+    border-radius: 10px;
+    height: 250px;
+    box-shadow: 0px 0px 5px lightgray;
+    cursor: pointer;
+}
+
+.pickCategory {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 1px solid lightgray;
+}
+
+.pickCategory:hover {
+    background-color: lightgrey;
+}
+
+.categoryPicked {
+    background-color: lightgrey;
+    opacity: 1;
+}
+
+.popupIcon {
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+}
+
+p {
+    font-weight: 700;
+    text-shadow: 0px 0px 10px lightgray;
+}
+
+.pickColor {
+    border: 1px solid lightgrey;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px lightgray;
+}
+
+.colorList {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.colorCircle {
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightgray;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+
+.colorCircle:last-child {
+    margin-right: 0px;
+}
+
+.colorPicked {
+    border: 3px solid rgb(180, 176, 176);
+    box-shadow: 0px 0px 10px lightgrey;
+}
+
+#red {
+    background-color: red;
+}
+
+#green {
+    background-color: green;
+}
+
+#blue {
+    background-color: rgb(0, 85, 255);
+}
+
+#orange {
+    background-color: orange;
+}
+
+#yellow {
+    background-color: rgb(245, 245, 29);
+}
+
+#white {
+    background-color: white;
+}
+
+#black {
+    background-color: black;
+}
+
+#pink {
+    background-color: rgb(253, 179, 233);
+}
+
+#brown {
+    background-color: rgb(139, 97, 97);
+}
+
+#purple {
+    background-color: rgb(183, 99, 211);
+}
+
+#grey {
+    background-color: rgb(164, 160, 165);
+}
+
+.pickIcon {
+    border: 1px solid lightgrey;
+    height: 210px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px lightgray;
+    margin-top: 20px;
+}
+
+.iconList {
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.iconPic {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
 }
