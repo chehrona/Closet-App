@@ -23,9 +23,9 @@
         <div class="closetHeader">
             <div id="category"><img src="assets/images/list.png" class="iconImage">Category</div>
             <div class="buttonsTop">
-                <i class="fa-solid fa-magnifying-glass searchButton"></i>
+                <div id="editButton" class="clipButtons">Edit</div>
                 <div id="closet">Closet</div>
-                <div id="editButton">Edit</div>
+                <div id="addToLookButton" class="clipButtons disabledButton">+ Look</div>
             </div>
         </div>
         <div class="closetBody">
@@ -66,7 +66,7 @@
                 <div class="showPickedImage">
                 </div>
             </div>
-            <div class="saveToPopup disabledPopup popupOuterBox">
+            <div class="saveToPopup 0disabledPopup popupOuterBox">
                 <div class="actionsButtonsTop">
                     <div id="cancelCatButton" class="clipButtons">Cancel</div>
                     <div class="popupLabel">Save To</div>
@@ -76,7 +76,7 @@
                     <div class="pickFirstCategory">
                         <p>Please select a category</p>
                         <div class="defaultCategories">
-                            <div id="makeOwnCategory" class="pickCategory"><img src="assets/images/question.png" class="popupIcon">Add category</div>
+                            <div class="customCategory"><div class="popupIcon"><i class="fa-solid fa-angle-down downIcon disabledButton"></i></div><input id="customCategoryName" placeholder="Add category" maxlength="15"/></div>
                             <div id="outerwear" class="pickCategory"><img src="assets/images/002-jacket.png" class="popupIcon">Outerwear</div>
                             <div id="tops" class="pickCategory"><img src="assets/images/009-sweater.png" class="popupIcon">Tops</div>
                             <div id="dresses" class="pickCategory"><img src="assets/images/003-dress.png" class="popupIcon">Dresses</div>
@@ -88,6 +88,8 @@
                     <div class="pickColor">
                         <p>Please select upto three colors</p>
                         <div class="colorList">
+                            <div class="colorCircle" id="silver"></div>
+                            <div class="colorCircle" id="gold"></div>
                             <div class="colorCircle" id="red"></div>
                             <div class="colorCircle" id="green"></div>
                             <div class="colorCircle" id="blue"></div>
@@ -99,34 +101,43 @@
                             <div class="colorCircle" id="brown"></div>
                             <div class="colorCircle" id="purple"></div>
                             <div class="colorCircle" id="grey"></div>
-                        </div>
-                    </div>
-                    <div class="pickIcon">
-                        <p>Please select a category icon</p>
-                        <div class="iconList">
-                            <img id="blazer" src="assets/images/001-blazer.png" class="iconPic">
-                            <img id="vests" src="assets/images/008-vest.png" class="iconPic">
-                            <img id="cardigan" src="assets/images/006-cardigan.png" class="iconPic">
-                            <img id="turtlenecks" src="assets/images/007-turtleneck.png" class="iconPic">
-                            <img id="hoodie" src="assets/images/012-hood.png" class="iconPic">
-                            <img id="overalls" src="assets/images/010-overall.png" class="iconPic">
-                            <img id="tshirt" src="assets/images/008-tshirt.png" class="iconPic">
-                            <img id="kicks" src="assets/images/singlet.png" class="iconPic">
-                            <img id="coats" src="assets/images/015-overcoat.png" class="iconPic">
-                            <img id="hats" src="assets/images/010-hat.png" class="iconPic">
-                            <img id="caps" src="assets/images/003-cap.png" class="iconPic">
-                            <img id="tuque" src="assets/images/016-wool-hat.png" class="iconPic">
-                            <img id="scarves" src="assets/images/017-scarf.png" class="iconPic">
-                            <img id="swimsuits" src="assets/images/013-swimsuit.png" class="iconPic">
-                            <img id="belts" src="assets/images/004-belt.png" class="iconPic">
-                            <img id="gloves" src="assets/images/012-gloves.png" class="iconPic">
-                            <img id="jewellery" src="assets/images/002-accessories.png" class="iconPic">
-                            <img id="sandals" src="assets/images/005-sandals.png" class="iconPic">
-                            <img id="boots" src="assets/images/011-boot.png" class="iconPic">
-                            <img id="kicks" src="assets/images/014-sport-shoe.png" class="iconPic">  
+                            <div class="colorCircle" id="beige"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="iconDropMenu disabledPopup">
+                <img id="blazer" src="assets/images/001-blazer.png" class="iconPic">
+                <img id="vests" src="assets/images/008-vest.png" class="iconPic">
+                <img id="cardigan" src="assets/images/006-cardigan.png" class="iconPic">
+                <img id="turtlenecks" src="assets/images/007-turtleneck.png" class="iconPic">
+                <img id="hoodie" src="assets/images/012-hood.png" class="iconPic">
+                <img id="overalls" src="assets/images/010-overall.png" class="iconPic">
+                <img id="tshirt" src="assets/images/008-tshirt.png" class="iconPic">
+                <img id="kicks" src="assets/images/singlet.png" class="iconPic">
+                <img id="coats" src="assets/images/015-overcoat.png" class="iconPic">
+                <img id="hats" src="assets/images/010-hat.png" class="iconPic">
+                <img id="caps" src="assets/images/003-cap.png" class="iconPic">
+                <img id="tuque" src="assets/images/016-wool-hat.png" class="iconPic">
+                <img id="scarves" src="assets/images/017-scarf.png" class="iconPic">
+                <img id="swimsuits" src="assets/images/013-swimsuit.png" class="iconPic">
+                <img id="belts" src="assets/images/004-belt.png" class="iconPic">
+                <img id="gloves" src="assets/images/012-gloves.png" class="iconPic">
+                <img id="jewellery" src="assets/images/002-accessories.png" class="iconPic">
+                <img id="sandals" src="assets/images/005-sandals.png" class="iconPic">
+                <img id="boots" src="assets/images/011-boot.png" class="iconPic">
+                <img id="kicks" src="assets/images/014-sport-shoe.png" class="iconPic">  
+            </div>
+            <div class="createLooksPopup disabledPopup popupOuterBox">
+                <div class="actionsButtonsTop">
+                    <div id="cancelLookButton" class="clipButtons">Cancel</div>
+                    <div class="popupLabel">Create a look</div>
+                    <div id="saveLookButton" class="clipButtons">Save</div>
+                </div>
+                <div class="createLookBody">
+                    <div id="lookMakerBoard"></div>
+                </div>
+                
             </div>
             <div class="importPopup disabledPopup popupOuterBox">
                 <div class="actionsButtonsTop">
@@ -148,6 +159,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.0/jquery-ui.min.js"></script>
     <script type="module" src="assets/javascript/clothes.js"></script> 
 </body>
 </html>

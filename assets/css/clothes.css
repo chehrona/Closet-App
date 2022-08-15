@@ -143,15 +143,6 @@ categoryName:hover {
     padding: 1px;
 }
 
-.searchButton {
-    color: rgb(140, 140, 178);
-    font-size: 24px;
-}
-
-#editButton {
-    color: rgb(140, 140, 178);
-    font-size: 18px;
-}
 
 .plusSign {
     margin-right: 5px;
@@ -265,11 +256,12 @@ categoryName:hover {
 
 .popupOuterBox {
     position: absolute;
-    left: 400px;
-    top: 150px;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -25%);
     height: 680px;
-    width: 50%;
-    min-width: 50%;
+    width: 600px;
+    min-width: 600px;
     border: 1px solid white;
     border-radius: 10px;
     box-shadow: 0px 0px 20px lightgrey;
@@ -301,6 +293,7 @@ categoryName:hover {
 .clipButtons {
     color: rgb(140, 140, 178);
     cursor: pointer;
+    font-size: 18px;
 }
 
 .clipperBody {
@@ -346,6 +339,7 @@ categoryName:hover {
 
 .outOfFocus {
     opacity: 0.5;
+    pointer-events: none;
 }
 
 object {
@@ -390,13 +384,12 @@ object {
 .showPickedImage {
     margin: 20px;
     position: relative;
-    height: 600px;
-    
+    height: 600px;  
 }
 
 .pickedImage {
+    background-color: transparent;
     height: 100%;
-    width: 100%;
     display: block;
     margin: 0 auto;
 }
@@ -421,7 +414,7 @@ object {
     border: 1px solid lightgray;
     overflow-y: scroll;
     border-radius: 10px;
-    height: 250px;
+    height: 420px;
     box-shadow: 0px 0px 5px lightgray;
     cursor: pointer;
 }
@@ -457,7 +450,7 @@ p {
 
 .pickColor {
     border: 1px solid lightgrey;
-    height: 100px;
+    height: 160px;
     width: 100%;
     justify-content: center;
     margin-top: 20px;
@@ -490,6 +483,17 @@ p {
     box-shadow: 0px 0px 10px lightgrey;
 }
 
+#silver {
+    background-color: silver;
+}
+
+#gold {
+    background-color: gold;
+}
+
+#beige {
+    background-color: #d2b698;
+}
 #red {
     background-color: red;
 }
@@ -534,24 +538,72 @@ p {
     background-color: rgb(164, 160, 165);
 }
 
-.pickIcon {
+.iconDropMenu {
+    position: absolute;
+    top: 300px;
+    left: 160px;
     border: 1px solid lightgrey;
-    height: 210px;
-    width: 100%;
+    height: 250px;
+    width: 80px;
     text-align: center;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px lightgray;
-    margin-top: 20px;
-}
-
-.iconList {
-    justify-content: left;
-    margin-top: 20px;
+    overflow-y: scroll;
+    z-index: 30;
+    background-color: white;
 }
 
 .iconPic {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
 }
+
+.iconPic:hover {
+    background-color: rgba(211, 211, 211, 0.5);
+}
+
+.itemsSelected {
+    border: 3px solid lightgrey; 
+    cursor: pointer;
+}
+
+.createLookBody {
+    width: 100%;
+    min-width: 100%;
+    height: 640px;
+    display: flex;
+}
+
+.lookItem {
+    height: 400px;
+    width: 300px;
+    display: block;
+    z-index: 20;
+}
+
+#lookMakerBoard {
+    width: 470px;
+}
+
+#customCategoryName {
+    border: transparent;
+    width: 100%;
+    float: right;
+    padding: 2px;
+    height: 98%;
+    background-color: white;
+    font-size: 18px;
+}
+
+
+.downIcon {
+    text-align: center;
+    position: absolute;
+    top: 115px;
+    left: 38px;
+    font-size: 22px;
+}
+
+
