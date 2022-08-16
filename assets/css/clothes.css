@@ -14,10 +14,6 @@
     border-bottom: 1px solid lightgrey;
 }
 
-img {
-    opacity: 1;
-}
-
 .closetHeader {
     display: flex;
     border: 1px solid lightgrey;
@@ -143,7 +139,6 @@ categoryName:hover {
     padding: 1px;
 }
 
-
 .plusSign {
     margin-right: 5px;
     z-index: 11;
@@ -267,7 +262,7 @@ categoryName:hover {
     box-shadow: 0px 0px 20px lightgrey;
     background-color: white;
     font-size: 18px;
-    z-index: 20;
+    z-index: 10;
     background-color: white;
 }
 
@@ -551,7 +546,7 @@ p {
     border-radius: 10px;
     box-shadow: 0px 0px 5px lightgray;
     overflow-y: scroll;
-    z-index: 30;
+    z-index: 11;
     background-color: white;
 }
 
@@ -579,14 +574,32 @@ p {
 }
 
 .lookItem {
-    height: 400px;
-    width: 300px;
-    display: block;
-    z-index: 20;
+    height: 180px;
+    width: 130px;
+    /* z-index: 10; */
 }
 
 #lookMakerBoard {
-    width: 470px;
+    width: 460px;
+    height: 640px;
+    overflow: hidden;
+    position: relative;
+}
+
+#selectedItemsPreview {
+    width: 138px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.draggedItem {
+    height: 300px;
+    width: 240px;
+    position: absolute !important;
+}
+
+.hideAfterDrag {
+    display: none;
 }
 
 #customCategoryName {
@@ -597,7 +610,6 @@ p {
     height: 98%;
     background-color: white;
     font-size: 18px;
-    /* overflow: hidden; */
 }
 
 

@@ -26,7 +26,9 @@ let imageFile = null;
 let categoryName = "";
 let pickedColorList = [];
 let itemsChosenForLooks = [];
-let looksCreated = {};
+let lookToSave = {};
+let lookBoardWidth = $("#lookMakerBoard").width();
+let lookBoardHeight = $("#lookMakerBoard").height();
 let categoryIcon = null;
 let customIcon = null;
 let customCategoryName = null;
@@ -104,15 +106,7 @@ $(document).ready(function() {
         resetsImportImagePopup();
     });
 
-    // Resets preview image page
-    let resetsImportImagePopup = function() {
-        $(".mainBody").removeClass("outOfFocus");
-        $(".addPicPopup").addClass("disabledPopup");
-        $(".pickIcon").addClass("disabledPopup");
-        $(".showPickedImage").empty();
-    }
-
-    // Actions on add category and color popup
+    // *************** CATEGORY AND COLORS POPUP *********************
     $(".downIcon").on("click", function() {
         $(".iconDropMenu").removeClass("disabledPopup");
     });
@@ -198,33 +192,7 @@ $(document).ready(function() {
         resetsSaveToPopup();    
     });
 
-    let resetsSaveToPopup = function () {
-        $(".mainBody").removeClass("outOfFocus");
-        $("#customCategoryName").attr("disabled", false); 
-        $(".saveToPopup").addClass("disabledPopup");
-        $(".pickCategory").removeClass("disabledButton");
-        $(".pickCategory").removeClass("categoryPicked");
-        $(".iconDropMenu").addClass("disabledPopup");
-        $(".downIcon").addClass("disabledButton");
-        $("#customCategoryName").val("");
-        $(".colorCircle").removeClass("colorPicked");
-        $(".colorCircle").addClass("removeWhenSelected");
-        $("#doneButton").addClass("disabledButton");
-        pickedColorList = [];   
-    }
-    
-    $(document).on("click", ".deleteImage", function() {
-        let parentDiv = $(this).parent();
-        parentDiv.addClass("imageSelected");
-        let deletePopup = $(".imageSelected").find(".deleteImagePopup");
-        deletePopup.removeClass("disabledPopup");
-    });
-    
-
-    $(document).on("click", ".deleteImagePopup", function() {
-        console.log(imageName)
-    });
-
+    // Selecting items for creating looks
     $(document).on("click", ".clothesItem", function() {
         let sourceOfImage = $(this).attr("src");
         if (itemsChosenForLooks.indexOf(sourceOfImage) !== -1) {
@@ -245,33 +213,86 @@ $(document).ready(function() {
             $(".removeSelected").addClass("outOfFocus");
         }
     })
-        
+    
     // Gets the images and saves them to be passed to 'create looks' board
     $("#addToLookButton").on("click", function() {
+        $(".clothesItem").removeClass("itemsSelected");
         $(".createLooksPopup").removeClass("disabledPopup");
         for (let i = 0; i < itemsChosenForLooks.length; i++) {
-            let lookItemElement = $('<img class="lookItem" id="' + i + 
-                                '" src="' + itemsChosenForLooks[i] + 
-                                '">');
-
-            lookItemElement.draggable({
-                stop: function(event, ui) {
-                    looksCreated[i] = [ui.position.top, ui.position.left];
-                    }
-                });
-            $("#lookMakerBoard").append(lookItemElement);
+            let lookItemElement = $('<img class="lookItem" draggable="true"' +
+                                'id="' + i + '" src="' + itemsChosenForLooks[i] + '">');
+            // Adds selected items to the side bar
+            $("#selectedItemsPreview").append(lookItemElement);
         }   
     });
 
-    // 
+    // **************** CREATE LOOK POPUP ***************************
+    // Triggered when the item is being dragged away from the side bar
+    let toDragItemURL = null;
+    let toDragItemID = null;
+    $(document).on("dragstart", ".lookItem", function(ev) {
+        toDragItemURL = $(this).attr("src");
+        toDragItemID = $(this).attr("id");
+        ev.originalEvent.dataTransfer.setData("dragItemImageURL", toDragItemURL);
+        ev.originalEvent.dataTransfer.setData("dragItemID", toDragItemID);
+    });
+
+    // Prevents auto drop at the board
+    $("#lookMakerBoard").on("dragover", function(ev) {
+        ev.preventDefault();
+    });
+
+    // When the item is dropped, it is appended to the board and that item is hidden
+    // from the side bar
+    $("#lookMakerBoard").on("drop", function(ev) {
+        ev.preventDefault();
+        let draggedImageSource = ev.originalEvent.dataTransfer.getData("dragItemImageURL");
+        let draggedItemID = ev.originalEvent.dataTransfer.getData("dragItemID");
+        let draggedItemElem = $('<img class="draggedItem" src="' + draggedImageSource + '">');
+        
+        // Keeps the newly dropped item still draggable and saves its position as % relative 
+        // to its parent div (#lookMakerBoard)
+        draggedItemElem.draggable({
+            stop:function(e, ui) {
+                lookToSave[draggedItemID] = [draggedImageSource, 
+                                            (ui.position.top/lookBoardHeight)*100, 
+                                            (ui.position.left/lookBoardWidth)*100];
+            }
+        });
+        $(this).append(draggedItemElem);
+
+        // Hides the dragged element from the side bar
+        $("img[id='" + draggedItemID + "']").addClass("hideAfterDrag");
+    });
 
     $("#saveLookButton").on("click", function(e) {
         e.preventDefault();
+        console.log(lookToSave);
         push(ref(db, "createdLooks/"), {
-            looksCreated
+            lookToSave
         });
-        $(".createLooksPopup").addClass("disabledPopup");
+        
+        resetsCreateLookPopup();
     });
+
+    $("#cancelLookButton").on("click", function() {
+        resetsCreateLookPopup();
+    });
+
+    // ***************** DELETE AND EDIT BUTTONS ON IMAGES *****************
+    $(document).on("click", ".deleteImage", function() {
+        let parentDiv = $(this).parent();
+        parentDiv.addClass("imageSelected");
+        let deletePopup = $(".imageSelected").find(".deleteImagePopup");
+        deletePopup.removeClass("disabledPopup");
+    });
+    
+    $(document).on("click", ".deleteImagePopup", function() {
+        console.log(imageName)
+    });
+
+    
+        
     
 
               
@@ -303,7 +324,35 @@ $(document).ready(function() {
     //     $(".externalPage").load(enteredURL);
     // })
 
-    
+    // Resets preview image page
+    let resetsImportImagePopup = function() {
+        $(".mainBody").removeClass("outOfFocus");
+        $(".addPicPopup").addClass("disabledPopup");
+        $(".pickIcon").addClass("disabledPopup");
+        $(".showPickedImage").empty();
+    }
 
-})
+    let resetsSaveToPopup = function () {
+        $(".mainBody").removeClass("outOfFocus");
+        $("#customCategoryName").attr("disabled", false); 
+        $(".saveToPopup").addClass("disabledPopup");
+        $(".pickCategory").removeClass("disabledButton");
+        $(".pickCategory").removeClass("categoryPicked");
+        $(".iconDropMenu").addClass("disabledPopup");
+        $(".downIcon").addClass("disabledButton");
+        $("#customCategoryName").val("");
+        $(".colorCircle").removeClass("colorPicked");
+        $(".colorCircle").addClass("removeWhenSelected");
+        $("#doneButton").addClass("disabledButton");
+        pickedColorList = [];   
+    }
+
+    let resetsCreateLookPopup = function() {
+        $(".createLooksPopup").addClass("disabledPopup");
+        $("#selectedItemsPreview").empty();
+        $("#lookMakerBoard").empty();
+        itemsChosenForLooks = [];
+        lookToSave = {};
+    }
+});
 

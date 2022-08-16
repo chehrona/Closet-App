@@ -1,3 +1,5 @@
+import { look } from "./look.js";
+
 $(document).ready(function() {
     const dateToday = new Date();
 
@@ -62,6 +64,11 @@ $(document).ready(function() {
         }).then(function (response) {
             console.log(response);
         });
+
+        // Get calendar looks from db
+
+        // foreach calendar look
+        // $(".calendarBox").html(look(data));
 });
 
 

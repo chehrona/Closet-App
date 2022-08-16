@@ -54,7 +54,7 @@ a:hover {
 }
 
 
-#aboutBar {
+#calendarBar {
     margin-right: 0;
 }
 
@@ -62,10 +62,6 @@ a:hover {
     margin: 0 auto;
     width: 100%;
     min-height: 85%;
-}
-
-img {
-    opacity: 0.5;
 }
 
 #getStarted {
