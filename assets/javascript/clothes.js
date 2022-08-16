@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
-import { getDatabase, push, ref, onValue} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
+import { getDatabase, set, push, ref, onValue} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js";
 
   // Your web app's Firebase configuration
@@ -19,8 +19,6 @@ const storage = getStorage(app);
 let categoryRef = "";
 
 
-let imageURLDb = null;
-let imageNameFromDb = null;
 let imageName = "";
 let imageSource = null;
 let reader = null;
@@ -28,30 +26,46 @@ let imageFile = null;
 let categoryName = "";
 let pickedColorList = [];
 let itemsChosenForLooks = [];
+let looksCreated = {};
+let categoryIcon = null;
 let customIcon = null;
 let customCategoryName = null;
 
 $(document).ready(function() {
-    onValue(ref(db), function() {
+
+    // Updates category list everytime a new category is added to the list
+    onValue(ref(db, "addedCategories"), function(snapshot) {
+        $(".categoryList").empty();
+        $(".defaultCategories").contents(':not(".customCategory")').remove();
+        for (let item in snapshot.val()) {
+            let categoryIconFromDb = snapshot.val()[item].icon;
+            let categoryNameFromDb = item;        
+            $(".categoryList").append('<div class="categoryName">' + '<img src="' + 
+                            categoryIconFromDb + '" class="iconImage">' + categoryNameFromDb + '</div>');
+
+            $(".defaultCategories").append('<div id="' + categoryNameFromDb +
+                        '" class="pickCategory"><img src="' + categoryIconFromDb +'" class="popupIcon">'
+                        + categoryNameFromDb + '</div>');
+        }
+    });
+
+    // Updates image board list everytime a new item is added to the list
+    onValue(ref(db, "clothesItems"), function(snapshot) {
         $(".imageList").empty();
-        let queryURL = "https://closet-e1cb1-default-rtdb.firebaseio.com/.json";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            for (let category in response) {
-                for (let key in response[category]) {
-                    imageURLDb = response[category][key].imageURL;
-                    imageNameFromDb = response[category][key].name;
-                    $(".imageList").append('<div class="clothesImageBox" name=">' + imageNameFromDb + '" >' + 
-                                    '<img src="' + imageURLDb + '" class="clothesItem removeWhenSelected">' + 
+        let categories = snapshot.val(); 
+        for (let category in categories) {
+            let images = categories[category];
+            for (let image in images) {
+                let imageURLDb = images[image].imageURL;
+                let imageNameFromDb = images[image].name;
+                $(".imageList").append('<div class="clothesImageBox" name=">' + imageNameFromDb + '" >' + 
+                                    '<img src="' + imageURLDb + '" class="clothesItem removeSelected">' + 
                                     '<i class="fa-solid fa-pen-to-square penEdit"></i>' + 
                                     '<i class="fa-solid fa-trash-can deleteImage"></i>' + 
                                     '<div class="deleteImagePopup disabledPopup">Delete</div></div>'); 
-                    }
                 }
-            });
-    });
+            }
+        });
     
     // When add item is clicked, a popup with either import from web or computer comes up
     $(".pageFooter").on("click", function() {
@@ -65,7 +79,6 @@ $(document).ready(function() {
 
     // When 'choose file' input content changes, a new popup comes up before saving
     $("#inputField").on("change", function(e) {
-        $(".showPickedImage").empty();
         let imageFiles = e.target.files;
         reader = new FileReader();
         reader.onload = function() {
@@ -73,6 +86,7 @@ $(document).ready(function() {
             $(".uploadPicPopup").addClass("disabledPopup");
             $(".addPicPopup").removeClass("disabledPopup");
             $(".showPickedImage").append("<img class='pickedImage' src='" + imageSource + "'/>");
+            $(".mainBody").addClass("outOfFocus");
         }
         imageFile = imageFiles[0];
         reader.readAsDataURL(imageFile);
@@ -81,34 +95,27 @@ $(document).ready(function() {
     });
 
     $("#nextButton").on("click", function() {
-        $(".addPicPopup").addClass("disabledPopup");
         $(".saveToPopup").removeClass("disabledPopup");
-        $(".pickIcon").addClass("disabledPopup");
+        resetsImportImagePopup();
+        $(".mainBody").addClass("outOfFocus");
     });
 
     $("#cancelButton").on("click", function() {
+        resetsImportImagePopup();
+    });
+
+    // Resets preview image page
+    let resetsImportImagePopup = function() {
+        $(".mainBody").removeClass("outOfFocus");
         $(".addPicPopup").addClass("disabledPopup");
-    });
+        $(".pickIcon").addClass("disabledPopup");
+        $(".showPickedImage").empty();
+    }
 
-    $(".pickCategory").on("click", function() {
-        categoryName = $(this).attr("id");
-        
-        if (categoryName) {
-            $(this).removeClass("categoryPicked");
-        } else {
-            $(this).addClass("categoryPicked");
-        }
-
-        // $(this).removeClass("disabledButton");
-        
-
-        categoryRef = storageRef(storage, categoryName + "/" + imageName);
-    });
-
+    // Actions on add category and color popup
     $(".downIcon").on("click", function() {
         $(".iconDropMenu").removeClass("disabledPopup");
     });
-
 
     $("#customCategoryName").keypress(function(e) {
         if (e.keyCode != "13") {
@@ -118,8 +125,6 @@ $(document).ready(function() {
         customCategoryName = $(this).val();
         $(".downIcon").removeClass("disabledButton");
         $("#customCategoryName").val("");
-        $("#customCategoryName").attr("disabled", true);        
-    
     });
 
     $(".iconPic").on("click", function() {
@@ -128,55 +133,85 @@ $(document).ready(function() {
             $(".iconDropMenu").addClass("disabledPopup");
         }, 200);
 
-        $(".downIcon").addClass("disabledButton");
+        let newCategoryDiv = $('<div id="' + customCategoryName +
+        '" class="pickCategory"><img src="' + customIcon +'" class="popupIcon">'
+        + customCategoryName + '</div>');
 
-        $(".customCategory").after('<div id="' + customCategoryName +
-                            '" class="pickCategory"><img src="' + customIcon +'" class="popupIcon">'
-                            + customCategoryName + '</div>');
+        $(".customCategory").after(newCategoryDiv); 
+    });
+
+    $(document).on("click", ".pickCategory", function() {
+        categoryName = $(this).attr("id");
+        categoryIcon = $(this).find("img").attr("src");
         
-        $()
+        if ($(".pickCategory").hasClass("categoryPicked")) {
+            $(".pickCategory").removeClass("categoryPicked");
+        }
+        
+        $(this).addClass("categoryPicked");
+        
+        categoryRef = storageRef(storage, categoryName + "/" + imageName);
+
     });
 
     $(".colorCircle").on("click", function() {
-        $(this).addClass("colorPicked");
+        $(this).removeClass("removeWhenSelected");
         let color = $(this).attr("id");
-        pickedColorList.push(color);
-        if (pickedColorList.length === 3) {
-            $(".colorCircle").addClass("disabledButton");
+        if ($(this).hasClass("colorPicked")) {
+            $(this).removeClass("colorPicked");
+            $(this).addClass("removeWhenSelected");
+            pickedColorList.splice(pickedColorList.indexOf(color), 1);
+            if (pickedColorList.length < 3) {
+                $(".removeWhenSelected").removeClass("disabledButton");
+            }
+        } else {
+            $(this).addClass("colorPicked");
+            pickedColorList.push(color);
         }
+
+        if (pickedColorList.length === 3) {
+            $(".removeWhenSelected").addClass("disabledButton");
+        }
+
         $("#doneButton").removeClass("disabledButton");
     });
 
- 
     $("#doneButton").on("click", function() {
-        $(".saveToPopup").addClass("disabledPopup");
-        if (!customCategoryName) {
-            uploadBytes(categoryRef, imageFile).then(function(snapshot) {
-            getDownloadURL(categoryRef).then(function(url) {
-                push(ref(db, categoryName + "/"), {
-                    imageURL: url,
-                    name: imageName,
-                    colors: pickedColorList
+        uploadBytes(categoryRef, imageFile).then(function(snapshot) {
+        getDownloadURL(categoryRef).then(function(url) {
+            push(ref(db, "clothesItems/" + categoryName + "/"), {
+                imageURL: url,
+                name: imageName,
+                colors: pickedColorList
                 });
-                } else {
-                    push(ref(db, customCategoryName + "/"), {
-                        imageURL: url,
-                        name: imageName,
-                        colors: pickedColorList
-                    });
-                }
-                
             }); 
         });
+
+        set(ref(db, "addedCategories/" + categoryName), {
+            icon: categoryIcon
+            });
+
+        resetsSaveToPopup();
     });
 
     $("#cancelCatButton").on("click", function() {
+        resetsSaveToPopup();    
+    });
+
+    let resetsSaveToPopup = function () {
+        $(".mainBody").removeClass("outOfFocus");
+        $("#customCategoryName").attr("disabled", false); 
         $(".saveToPopup").addClass("disabledPopup");
         $(".pickCategory").removeClass("disabledButton");
         $(".pickCategory").removeClass("categoryPicked");
+        $(".iconDropMenu").addClass("disabledPopup");
+        $(".downIcon").addClass("disabledButton");
+        $("#customCategoryName").val("");
         $(".colorCircle").removeClass("colorPicked");
+        $(".colorCircle").addClass("removeWhenSelected");
         $("#doneButton").addClass("disabledButton");
-    });
+        pickedColorList = [];   
+    }
     
     $(document).on("click", ".deleteImage", function() {
         let parentDiv = $(this).parent();
@@ -194,41 +229,52 @@ $(document).ready(function() {
         let sourceOfImage = $(this).attr("src");
         if (itemsChosenForLooks.indexOf(sourceOfImage) !== -1) {
             $(this).removeClass("itemsSelected");
-            $(this).addClass("removeWhenSelected");
+            $(this).addClass("removeSelected");
             itemsChosenForLooks.splice(itemsChosenForLooks.indexOf(sourceOfImage), 1);
         } else {
             $(this).addClass("itemsSelected");
-            $(this).removeClass("removeWhenSelected");
+            $(this).removeClass("removeSelected");
             itemsChosenForLooks.push(sourceOfImage);
         }
         
         if (itemsChosenForLooks.length !== 0 && itemsChosenForLooks.length <= 10) {
             $("#addToLookButton").removeClass("disabledButton");
-            $(".removeWhenSelected").removeClass("outOfFocus");
+            $(".removeSelected").removeClass("outOfFocus");
         } else if (itemsChosenForLooks.length > 10) {
             $("#addToLookButton").addClass("disabledButton");
-            $(".removeWhenSelected").addClass("outOfFocus");
+            $(".removeSelected").addClass("outOfFocus");
         }
     })
         
+    // Gets the images and saves them to be passed to 'create looks' board
     $("#addToLookButton").on("click", function() {
         $(".createLooksPopup").removeClass("disabledPopup");
         for (let i = 0; i < itemsChosenForLooks.length; i++) {
             let lookItemElement = $('<img class="lookItem" id="' + i + 
-            '" src="' + itemsChosenForLooks[i] + '">');
-            lookItemElement.draggable();
+                                '" src="' + itemsChosenForLooks[i] + 
+                                '">');
+
+            lookItemElement.draggable({
+                stop: function(event, ui) {
+                    looksCreated[i] = [ui.position.top, ui.position.left];
+                    }
+                });
             $("#lookMakerBoard").append(lookItemElement);
         }   
     });
 
+    // 
 
+    $("#saveLookButton").on("click", function(e) {
+        e.preventDefault();
+        push(ref(db, "createdLooks/"), {
+            looksCreated
+        });
+        $(".createLooksPopup").addClass("disabledPopup");
+    });
     
 
-      
-    
-    
-
-        
+              
     $(".importWeb").on("click", function() {
         $(".pickActionPopup").addClass("disabledPopup");
         // $(".importPopup").removeClass("disabledPopup");
@@ -259,5 +305,5 @@ $(document).ready(function() {
 
     
 
-});
+})
 
