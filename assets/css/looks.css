@@ -28,7 +28,7 @@
     position: absolute;
 }
 
-.lookBox i {
+.lookButtons {
     position: absolute;
     color: gray;
     bottom: 5px;
@@ -40,7 +40,7 @@
     right: 20px;
 }
 
-#scheduleLook {
+.scheduleLook {
     right: 5px;
 }
 
@@ -48,11 +48,20 @@
     right: 38px;
 }
 
-.datepicker {
+.datePicker {
     position: absolute;
     left: 150px;
     top: 230px;
     font-size: 14px;
     width: 150px;
     height: 150px;
+    z-index: 10;
+}
+
+#looksDivHolder {
+    display: flex;
+}
+
+.disabledCal {
+    display: none;
 }

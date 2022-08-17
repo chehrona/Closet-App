@@ -84,21 +84,28 @@
    
 }
 
-.days div {
+.this-month {
     font-size: 14px;
     width: calc(100%/7);
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    text-align: left;
+    /* text-align: left; */
     font-weight: bold;
-    height: 120px;
+    height: 150px;
+    display: flex;
 }
 
 .prev-date, .next-date {
     opacity: 0.5;
+    font-size: 14px;
+    width: calc(100%/7);
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    font-weight: bold;
+    height: 150px;
 }
 
-.days div:hover {
+.this-month:hover, .prev-date:hover, .next-date:hover {
     border: 2px solid grey;
     cursor: pointer;
 }
@@ -106,3 +113,26 @@
 .today {
     background-color: whitesmoke;
 }
+
+
+.calendar .lookBox {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.calendar .lookBox img {
+    height: auto;
+    width: 65px;
+    position: absolute;
+}
+
+.calendar .lookButtons {
+    display: none;
+}
+
+.dates {
+    position: absolute;
+    z-index: 10;
+}
+
+

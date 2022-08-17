@@ -1,6 +1,6 @@
 import { look } from "./look.js";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
-import { getDatabase, set, push, ref, onValue} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
+import { getDatabase, set, ref, onValue} from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyBADzc7z8CWQtVClO68p2zXZUs6Bc-D_Ss",
@@ -26,13 +26,20 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("click", "#scheduleLook",  function() {
-        $(".lookBox").append('<div class="datepicker"></div>');
-        $(".datepicker").datepicker({
+    $(document).on("click", ".scheduleLook",  function() {
+        if ($(".datePicker",  $(this).parent()).hasClass("disabledCal")) {
+            $(".datePicker").addClass("disabledCal");
+            $(".datePicker",  $(this).parent()).removeClass("disabledCal");
+        } else {
+            $(".datePicker",  $(this).parent()).addClass("disabledCal");
+        }
+       
+        $(".datePicker", $(this).parent()).datepicker({
             onSelect: function(datePicked) {
                 set(ref(db, "scheduledLooks/" + new Date(datePicked).getTime() + "/"), {
                     dBLookID: $(this).parent().attr("id")
                 });
+                $(".datePicker",  $(this).parent()).addClass("disabledCal");
             }
         });
     });
